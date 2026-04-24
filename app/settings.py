@@ -12,8 +12,8 @@ class Settings(BaseSettings):
     access_token_expire_minutes: int = 60
     password_hash_iterations: int = 210_000
 
-    gemini_api_key: str | None = None
-    gemini_model: str = "gemini-1.5-flash"
+    gemini_api_key: str = "AIzaSyCulVGSeNaDyhUPSsZ6Qx5zTzYosTUi5yQ"
+    gemini_model: str = "gemini-flash-latest"
 
 
 @lru_cache

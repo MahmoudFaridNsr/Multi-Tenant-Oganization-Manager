@@ -69,7 +69,11 @@ async def _gemini_answer(*, question: str, logs: list[AuditLog]) -> str | None:
     payload = {"contents": [{"role": "user", "parts": [{"text": prompt}]}]}
 
     async with httpx.AsyncClient(timeout=30) as client:
-        resp = await client.post(url, params={"key": settings.gemini_api_key}, json=payload)
+        resp = await client.post(
+            url,
+            headers={"X-goog-api-key": settings.gemini_api_key},
+            json=payload,
+        )
         if resp.status_code != 200:
             return None
         data = resp.json()
