@@ -1,10 +1,8 @@
 services:
   db:
     image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: postgres
+    env_file:
+      - .env.docker
     ports:
       - "5432:5432"
     healthcheck:
@@ -15,11 +13,8 @@ services:
 
   api:
     build: .
-    environment:
-      DATABASE_URL: postgresql+asyncpg://postgres:postgres@db:5432/org_manager
-      JWT_SECRET_KEY: change-me-in-compose
-      GEMINI_API_KEY: ""
-      GEMINI_MODEL: gemini-flash-latest
+    env_file:
+      - .env.docker
     ports:
       - "8000:8000"
     depends_on:
@@ -27,4 +22,3 @@ services:
         condition: service_healthy
     command: >
       sh -c "python -m app.seed && python -m uvicorn app.main:app --host 0.0.0.0 --port 8000"
-
